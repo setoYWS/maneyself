@@ -5,4 +5,5 @@ import com.enigmacamp.maneyself.model.dto.response.IncomeResponse;
 
 public interface IncomeService {
     IncomeResponse createIncome(IncomeRequest request, String userId);
+    IncomeResponse getIncome(String id);
 }

@@ -5,6 +5,7 @@ import com.enigmacamp.maneyself.model.dto.response.PrincipalTypeResponse;
 import com.enigmacamp.maneyself.model.entity.PrincipalType;
 import com.enigmacamp.maneyself.repository.PrincipalTypeRepository;
 import com.enigmacamp.maneyself.service.PrincipalTypeService;
+import com.enigmacamp.maneyself.utils.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,19 @@ public class PrincipalTypeServiceImpl implements PrincipalTypeService {
         return PrincipalTypeResponse.builder()
                 .id(currentPrincipalType.getId())
                 .principalType(currentPrincipalType.getPrincipal().name())
+                .build();
+    }
+
+    @Override
+    public PrincipalTypeResponse getById(String id) {
+        PrincipalType principalType = principalTypeRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Principal type not found"));
+        return convertToResponse(principalType);
+    }
+
+    private PrincipalTypeResponse convertToResponse(PrincipalType principalType) {
+        return PrincipalTypeResponse.builder()
+                .id(principalType.getId())
+                .principalType(principalType.getPrincipal().name())
                 .build();
     }
 }

@@ -5,4 +5,5 @@ import com.enigmacamp.maneyself.model.dto.response.ManagementTypeResponse;
 
 public interface ManagementTypeService {
     ManagementTypeResponse getOrSave(ManagementTypeRequest request);
+    ManagementTypeResponse getById(String id);
 }

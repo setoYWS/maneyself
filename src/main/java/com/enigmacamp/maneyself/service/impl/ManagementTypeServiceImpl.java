@@ -8,6 +8,7 @@ import com.enigmacamp.maneyself.model.entity.ManagementType;
 import com.enigmacamp.maneyself.model.entity.PrincipalType;
 import com.enigmacamp.maneyself.repository.ManagementTypeRepository;
 import com.enigmacamp.maneyself.service.ManagementTypeService;
+import com.enigmacamp.maneyself.utils.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,20 @@ public class ManagementTypeServiceImpl implements ManagementTypeService {
                 .id(currentManagementType.getId())
                 .type(currentManagementType.getType().name())
                 .principalTypeList(currentManagementType.getPrincipals().stream().map(this::convertToResponse).toList())
+                .build();
+    }
+
+    @Override
+    public ManagementTypeResponse getById(String id) {
+        ManagementType managementType = managementTypeRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Management type with id " + id + " not found"));
+        return convertToResponse(managementType);
+    }
+
+    ManagementTypeResponse convertToResponse(ManagementType managementType) {
+        return ManagementTypeResponse.builder()
+                .id(managementType.getId())
+                .type(managementType.getType().name())
+                .principalTypeList(managementType.getPrincipals().stream().map(this::convertToResponse).toList())
                 .build();
     }
 

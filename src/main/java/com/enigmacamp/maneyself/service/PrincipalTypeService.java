@@ -6,4 +6,5 @@ import com.enigmacamp.maneyself.model.entity.PrincipalType;
 
 public interface PrincipalTypeService {
     PrincipalTypeResponse getOrSave(PrincipalTypeRequest principal);
+    PrincipalTypeResponse getById(String id);
 }

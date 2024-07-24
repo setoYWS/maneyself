@@ -5,4 +5,5 @@ import com.enigmacamp.maneyself.model.dto.response.ProfileResponse;
 
 public interface ProfileService {
     ProfileResponse createProfile(ProfileRequest request, String userId);
+    ProfileResponse getProfile(String userId);
 }

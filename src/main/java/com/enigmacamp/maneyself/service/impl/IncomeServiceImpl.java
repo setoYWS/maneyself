@@ -41,4 +41,19 @@ public class IncomeServiceImpl implements IncomeService {
                 .transactionDate(income.getTransactionDate())
                 .build();
     }
+
+    @Override
+    public IncomeResponse getIncome(String id) {
+        Income income = incomeRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("Income not found!"));
+        return convertToResponse(income);
+    }
+
+    IncomeResponse convertToResponse(Income income) {
+        return IncomeResponse.builder()
+                .id(income.getId())
+                .title(income.getTitle())
+                .nominal(income.getNominal())
+                .transactionDate(income.getTransactionDate())
+                .build();
+    }
 }

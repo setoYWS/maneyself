@@ -60,4 +60,20 @@ public class EvaluationServiceImpl implements EvaluationService {
                 .status(evaluation.getStatus().name())
                 .build();
     }
+
+    @Override
+    public EvaluationResponse getEvaluation(String id) {
+        Evaluation evaluation = evaluationRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("Evaluation not found!"));
+        return convertToResponse(evaluation);
+    }
+
+    EvaluationResponse convertToResponse(Evaluation evaluation) {
+        return EvaluationResponse.builder()
+                .id(evaluation.getId())
+                .totalIncome(evaluation.getTotalIncome())
+                .totalExpense(evaluation.getTotalExpense())
+                .date(evaluation.getTransactionDate())
+                .status(evaluation.getStatus().name())
+                .build();
+    }
 }

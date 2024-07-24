@@ -34,4 +34,19 @@ public class ProfileServiceImpl implements ProfileService {
                 .lastName(profile.getLastName())
                 .build();
     }
+
+    @Override
+    public ProfileResponse getProfile(String userId) {
+        Profile profile = profileRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User not found"));
+        return convertToResponse(profile);
+    }
+
+    private ProfileResponse convertToResponse(Profile profile) {
+        return ProfileResponse.builder()
+                .id(profile.getId())
+                .firstName(profile.getFirstName())
+                .lastName(profile.getLastName())
+                .age(profile.getAge())
+                .build();
+    }
 }

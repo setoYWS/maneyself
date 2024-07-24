@@ -3,6 +3,7 @@ package com.enigmacamp.maneyself.controller;
 import com.enigmacamp.maneyself.constant.APIUrl;
 import com.enigmacamp.maneyself.model.dto.request.EvaluationRequest;
 import com.enigmacamp.maneyself.model.dto.request.ExpensesRequest;
+import com.enigmacamp.maneyself.model.dto.response.AllocationResponse;
 import com.enigmacamp.maneyself.model.dto.response.CommonResponse;
 import com.enigmacamp.maneyself.model.dto.response.EvaluationResponse;
 import com.enigmacamp.maneyself.model.dto.response.ExpensesResponse;
@@ -12,10 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -35,6 +33,20 @@ public class EvaluationController {
                 .body(
                         generateResponse(
                                 "Evaluation created successfully",
+                                Optional.of(response)
+                        )
+                );
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CommonResponse<EvaluationResponse>> getEvaluationById(@PathVariable String id, HttpServletRequest reqServlet) {
+        String userId = (String) reqServlet.getAttribute("userId");
+        EvaluationResponse response = evaluationService.getEvaluation(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        generateResponse(
+                                "Evaluation found",
                                 Optional.of(response)
                         )
                 );

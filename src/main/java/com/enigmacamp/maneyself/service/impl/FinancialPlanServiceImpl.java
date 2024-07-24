@@ -46,4 +46,24 @@ public class FinancialPlanServiceImpl implements FinancialPlanService {
                         .build())
                 .build();
     }
+
+    @Override
+    public FinancialPlanResponse getFinancialPlan(String id) {
+        FinancialPlan financialPlan = financialPlanRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Financial Plan not found!"));
+        return convertToResponse(financialPlan);
+    }
+
+    FinancialPlanResponse convertToResponse(FinancialPlan financialPlan) {
+        return FinancialPlanResponse.builder()
+                .id(financialPlan.getId())
+                .managementType(ManagementTypeResponse.builder()
+                        .id(financialPlan.getManagementType().getId())
+                        .type(financialPlan.getManagementType().getType().name())
+                        .build())
+                .user(UserResponse.builder()
+                        .id(financialPlan.getUser().getId())
+                        .email(financialPlan.getUser().getEmail())
+                        .build())
+                .build();
+    }
 }

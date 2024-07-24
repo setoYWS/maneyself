@@ -47,4 +47,19 @@ public class ExpensesServiceImpl implements ExpensesService {
                 .transactionDate(expenses.getTransactionDate())
                 .build();
     }
+
+    @Override
+    public ExpensesResponse getById(String id) {
+        Expenses expenses = expensesRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not Found!"));
+        return convertToExpensesResponse(expenses);
+    }
+
+    ExpensesResponse convertToExpensesResponse(Expenses expenses) {
+        return ExpensesResponse.builder()
+                .id(expenses.getId())
+                .title(expenses.getTitle())
+                .nominal(expenses.getNominal())
+                .transactionDate(expenses.getTransactionDate())
+                .build();
+    }
 }

@@ -5,4 +5,5 @@ import com.enigmacamp.maneyself.model.dto.response.ExpensesResponse;
 
 public interface ExpensesService {
     ExpensesResponse createExpense(ExpensesRequest request, String userId);
+    ExpensesResponse getById(String id);
 }

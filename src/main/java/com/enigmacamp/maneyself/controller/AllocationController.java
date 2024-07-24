@@ -26,7 +26,7 @@ public class AllocationController {
         String userId = (String) reqServlet.getAttribute("userId");
         AllocationResponse response = allocationService.getAllocationById(id);
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.OK)
                 .body(
                         generateResponse(
                                 "Allocation found",
